@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kyle Vance — Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #080808;
+      --white: #f0ece4;
+      --gray: #a09a90;
+      --accent: #c8b89a;
+      --panel-transition: 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      overflow: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 48px;
+      mix-blend-mode: normal;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      opacity: 0;
+      animation: fadeIn 1.2s 0.3s forwards;
+    }
+
+    .nav-contact {
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.3s;
+      opacity: 0;
+      animation: fadeIn 1.2s 0.5s forwards;
+    }
+
+    .nav-contact:hover { color: var(--white); }
+
+    /* ── PANELS ── */
+    .panels {
+      display: flex;
+      height: 100vh;
+      width: 100%;
+    }
+
+    .panel {
+      position: relative;
+      flex: 1;
+      overflow: hidden;
+      cursor: pointer;
+      transition: flex var(--panel-transition);
+    }
+
+    .panels:hover .panel { flex: 0.6; }
+    .panels:hover .panel:hover { flex: 1.8; }
+
+    .panel-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform var(--panel-transition), filter var(--panel-transition);
+      filter: brightness(0.45) contrast(1.1);
+    }
+
+    .panel:hover .panel-bg {
+      transform: scale(1.04);
+      filter: brightness(0.55) contrast(1.05);
+    }
+
+    /* Gradient overlays per panel */
+    .panel::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,0.75) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Dividers */
+    .panel:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 1px;
+      height: 100%;
+      background: rgba(240,236,228,0.12);
+      z-index: 10;
+    }
+
+    /* Placeholder gradient backgrounds (swap with real images) */
+    #panel-travel .panel-bg {
+      background-image:
+        linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #533483 100%);
+    }
+
+    #panel-portraits .panel-bg {
+      background-image:
+        linear-gradient(135deg, #1c1a18 0%, #2d2520 40%, #3d3028 70%, #1c1a18 100%);
+    }
+
+    #panel-dailys .panel-bg {
+      background-image:
+        linear-gradient(135deg, #141414 0%, #1f2d1f 30%, #162216 60%, #0d1a0d 100%);
+    }
+
+    /* Panel label */
+    .panel-label {
+      position: absolute;
+      bottom: 52px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 2;
+      transform: translateY(8px);
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .panel:hover .panel-label { transform: translateY(0); }
+
+    .panel-label h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      opacity: 0.9;
+      margin-bottom: 10px;
+    }
+
+    .panel-label .panel-cta {
+      display: inline-block;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.4s 0.1s, transform 0.4s 0.1s;
+    }
+
+    .panel:hover .panel-cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Panel number */
+    .panel-num {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      z-index: 2;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(5rem, 12vw, 10rem);
+      font-weight: 300;
+      color: rgba(240,236,228,0.04);
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+
+    .panel:hover .panel-num { opacity: 0; }
+
+    /* Entry animation */
+    .panel {
+      opacity: 0;
+      animation: panelReveal 1s forwards;
+    }
+    #panel-travel   { animation-delay: 0.1s; }
+    #panel-portraits{ animation-delay: 0.25s; }
+    #panel-dailys   { animation-delay: 0.4s; }
+
+    @keyframes panelReveal {
+      from { opacity: 0; transform: scaleY(0.97); }
+      to   { opacity: 1; transform: scaleY(1); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* Center wordmark */
+    .wordmark {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 50;
+      text-align: center;
+      pointer-events: none;
+      opacity: 0;
+      animation: wordmarkReveal 1.4s 0.6s forwards;
+    }
+
+    .wordmark h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 5vw, 4rem);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .wordmark .subtitle {
+      margin-top: 10px;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .wordmark-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin: 14px auto 10px;
+      opacity: 0.7;
+    }
+
+    @keyframes wordmarkReveal {
+      from { opacity: 0; transform: translate(-50%, calc(-50% + 12px)); }
+      to   { opacity: 1; transform: translate(-50%, -50%); }
+    }
+
+    /* Fade wordmark on hover */
+    .panels:hover ~ .wordmark,
+    .panels:has(.panel:hover) + .wordmark {
+      opacity: 0 !important;
+      animation: none;
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      html, body { overflow: auto; }
+      .panels { flex-direction: column; height: auto; }
+      .panel { flex: none !important; height: 33.33vh; min-height: 200px; }
+      .panels:hover .panel, .panels:hover .panel:hover { flex: none; }
+      nav { padding: 20px 24px; }
+      .wordmark { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">Kyle Vance</a>
+    <a class="nav-contact" href="contact.html">Contact</a>
+  </nav>
+
+  <div class="panels">
+
+    <div class="panel" id="panel-travel" onclick="location.href='travel/index.html'">
+      <div class="panel-bg"></div>
+      <div class="panel-num">01</div>
+      <div class="panel-label">
+        <h2>Travel</h2>
+        <span class="panel-cta">View Series →</span>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-portraits" onclick="location.href='portraits/index.html'">
+      <div class="panel-bg"></div>
+      <div class="panel-num">02</div>
+      <div class="panel-label">
+        <h2>Portraits</h2>
+        <span class="panel-cta">View Series →</span>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-dailys" onclick="location.href='dailys/index.html'">
+      <div class="panel-bg"></div>
+      <div class="panel-num">03</div>
+      <div class="panel-label">
+        <h2>Dailys</h2>
+        <span class="panel-cta">View Series →</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="wordmark">
+    <h1>Kyle Vance</h1>
+    <div class="wordmark-line"></div>
+    <p class="subtitle">Photography</p>
+  </div>
+
+</body>
+</html>

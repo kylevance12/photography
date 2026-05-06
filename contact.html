@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Kyle Vance Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #080808;
+      --white: #f0ece4;
+      --gray: #a09a90;
+      --accent: #c8b89a;
+      --dim: #141210;
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 48px;
+      background: linear-gradient(to bottom, rgba(8,8,8,0.9) 0%, transparent 100%);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+    }
+
+    .nav-links a {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--white); }
+
+    /* ── LAYOUT ── */
+    .contact-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* Left: decorative */
+    .contact-left {
+      position: relative;
+      overflow: hidden;
+      background: var(--dim);
+      min-height: 50vh;
+    }
+
+    .contact-left-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, #1a1410 0%, #2a1e16 40%, #0e0c0a 100%);
+    }
+
+    .contact-left-noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+
+    .contact-left-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 64px 56px;
+    }
+
+    .contact-left-content .eyebrow {
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      opacity: 0.8;
+    }
+
+    .contact-left-content h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 32px;
+    }
+
+    .contact-left-content p {
+      font-size: 0.72rem;
+      font-weight: 200;
+      line-height: 2;
+      color: var(--gray);
+      max-width: 320px;
+    }
+
+    /* Decorative lines */
+    .deco-lines {
+      position: absolute;
+      top: 50%;
+      right: 40px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      opacity: 0.12;
+    }
+
+    .deco-lines span {
+      display: block;
+      height: 1px;
+      background: var(--white);
+    }
+
+    /* Right: info */
+    .contact-right {
+      padding: 120px 64px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contact-block {
+      margin-bottom: 52px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: blockIn 0.7s forwards;
+    }
+
+    .contact-block:nth-child(1) { animation-delay: 0.2s; }
+    .contact-block:nth-child(2) { animation-delay: 0.35s; }
+    .contact-block:nth-child(3) { animation-delay: 0.5s; }
+    .contact-block:nth-child(4) { animation-delay: 0.65s; }
+
+    @keyframes blockIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .contact-block .block-label {
+      font-size: 0.52rem;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+      opacity: 0.8;
+    }
+
+    .contact-block .block-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--white);
+    }
+
+    .contact-block a.block-value {
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-block a.block-value:hover { color: var(--accent); }
+
+    .contact-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(200,184,154,0.3);
+      margin-bottom: 52px;
+    }
+
+    /* Social row */
+    .social-row {
+      display: flex;
+      gap: 28px;
+      margin-top: 8px;
+      opacity: 0;
+      animation: blockIn 0.7s 0.75s forwards;
+    }
+
+    .social-link {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .social-link::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: currentColor;
+      transition: width 0.3s;
+    }
+
+    .social-link:hover { color: var(--white); }
+    .social-link:hover::before { width: 30px; }
+
+    footer {
+      grid-column: 1 / -1;
+      border-top: 1px solid rgba(240,236,228,0.08);
+      padding: 24px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      color: rgba(160,154,144,0.4);
+    }
+
+    @media (max-width: 800px) {
+      .contact-page { grid-template-columns: 1fr; }
+      .contact-left { min-height: 40vh; }
+      .contact-left-content { padding: 40px 32px; }
+      .contact-right { padding: 56px 32px 64px; }
+      nav { padding: 20px 24px; }
+      footer { padding: 24px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">Kyle Vance</a>
+    <div class="nav-links">
+      <a href="travel/index.html">Travel</a>
+      <a href="portraits/index.html">Portraits</a>
+      <a href="dailys/index.html">Dailys</a>
+      <a href="contact.html" class="active">Contact</a>
+    </div>
+  </nav>
+
+  <div class="contact-page">
+
+    <div class="contact-left">
+      <div class="contact-left-bg"></div>
+      <div class="contact-left-noise"></div>
+      <div class="deco-lines">
+        <span style="width:60px"></span>
+        <span style="width:40px"></span>
+        <span style="width:80px"></span>
+        <span style="width:30px"></span>
+        <span style="width:55px"></span>
+        <span style="width:70px"></span>
+      </div>
+      <div class="contact-left-content">
+        <p class="eyebrow">Get in touch</p>
+        <h1>Let's<br>talk.</h1>
+        <p>Available for commissions, collaborations, and conversations about photography.</p>
+      </div>
+    </div>
+
+    <div class="contact-right">
+
+      <div class="contact-block">
+        <p class="block-label">Email</p>
+        <a class="block-value" href="mailto:kylevance2@gmail.com">kylevance2@gmail.com</a>
+      </div>
+
+      <div class="contact-divider"></div>
+
+      <div class="contact-block">
+        <p class="block-label">Based in</p>
+        <p class="block-value">— Add your location</p>
+      </div>
+
+      <div class="contact-block">
+        <p class="block-label">Available for</p>
+        <p class="block-value" style="font-size:1.1rem; line-height:1.7; color: var(--gray);">
+          Commissions &nbsp;·&nbsp; Licensing &nbsp;·&nbsp; Collaborations
+        </p>
+      </div>
+
+      <div class="contact-block">
+        <p class="block-label">Follow</p>
+        <div class="social-row">
+          <!-- Update these href links with your actual profiles -->
+          <a class="social-link" href="#" target="_blank">Instagram</a>
+          <a class="social-link" href="#" target="_blank">VSCO</a>
+          <a class="social-link" href="#" target="_blank">500px</a>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>
+      <p>© 2025 Kyle Vance Photography</p>
+      <p>All rights reserved</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
